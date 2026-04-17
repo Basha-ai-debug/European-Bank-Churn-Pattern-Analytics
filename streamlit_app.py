@@ -1,10 +1,10 @@
-﻿import streamlit as st
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 
-st.set_page_config(page_title="European Bank Churn Analytics", layout="wide", page_icon="🏦", initial_sidebar_state="expanded")
+st.set_page_config(page_title="European Bank Churn Analytics", layout="wide", page_icon="??", initial_sidebar_state="expanded")
 
 # PREMIUM DARK MODE CSS
 st.markdown("""
@@ -142,7 +142,7 @@ st.markdown("""
 # Title Section
 st.markdown("""
 <div style='background: linear-gradient(135deg, #0f1422 0%, #1a1a2e 100%); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid #2a3042; text-align: center;'>
-    <h1 style='color: #e8eef2; margin: 0; font-size: 32px;'>🏦 Customer Segmentation & Churn Pattern Analytics</h1>
+    <h1 style='color: #e8eef2; margin: 0; font-size: 32px;'>?? Customer Segmentation & Churn Pattern Analytics</h1>
     <p style='color: #7c8db0; margin: 12px 0 0 0;'>European Banking - Unified Mentor Project | Premium Analytics Dashboard</p>
 </div>
 """, unsafe_allow_html=True)
@@ -156,13 +156,13 @@ def load_data():
 df = load_data()
 
 # Sidebar Filters
-st.sidebar.markdown("# 🔍 Filter Dashboard")
+st.sidebar.markdown("# ?? Filter Dashboard")
 st.sidebar.markdown("---")
 
-selected_geo = st.sidebar.multiselect("📍 Geography", df['Geography'].unique(), default=df['Geography'].unique())
-selected_gender = st.sidebar.multiselect("👤 Gender", df['Gender'].unique(), default=df['Gender'].unique())
-age_range = st.sidebar.slider("📅 Age Range", int(df['Age'].min()), int(df['Age'].max()), (18, 92))
-credit_range = st.sidebar.slider("📊 Credit Score Range", int(df['CreditScore'].min()), int(df['CreditScore'].max()), (350, 850))
+selected_geo = st.sidebar.multiselect("?? Geography", df['Geography'].unique(), default=df['Geography'].unique())
+selected_gender = st.sidebar.multiselect("?? Gender", df['Gender'].unique(), default=df['Gender'].unique())
+age_range = st.sidebar.slider("?? Age Range", int(df['Age'].min()), int(df['Age'].max()), (18, 92))
+credit_range = st.sidebar.slider("?? Credit Score Range", int(df['CreditScore'].min()), int(df['CreditScore'].max()), (350, 850))
 
 # Apply filters
 df_filtered = df[
@@ -173,7 +173,7 @@ df_filtered = df[
 ]
 
 if len(df_filtered) == 0:
-    st.warning("⚠️ No data matches your filters. Please adjust your selection.")
+    st.warning("?? No data matches your filters. Please adjust your selection.")
     st.stop()
 
 # Calculate KPIs
@@ -192,7 +192,7 @@ active_data = df_filtered[df_filtered['IsActiveMember'] == 1]
 active_rate = (active_data['Exited'].sum() / len(active_data)) * 100 if len(active_data) > 0 else 0
 
 # KPI Row
-st.markdown("## 📊 Key Performance Indicators")
+st.markdown("## ?? Key Performance Indicators")
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -217,7 +217,7 @@ with col3:
     st.markdown(f"""
     <div class="metric-card">
         <h3>{germany_rate:.1f}%</h3>
-        <p>🇩🇪 Germany Churn</p>
+        <p>???? Germany Churn</p>
         <small>Highest risk region</small>
     </div>
     """, unsafe_allow_html=True)
@@ -226,7 +226,7 @@ with col4:
     st.markdown(f"""
     <div class="metric-card">
         <h3>{inactive_rate:.1f}%</h3>
-        <p>📉 Inactive Members</p>
+        <p>?? Inactive Members</p>
         <small>{inactive_rate/active_rate:.1f}x vs Active</small>
     </div>
     """, unsafe_allow_html=True)
@@ -237,7 +237,7 @@ st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("### 🌍 Churn Rate by Country")
+    st.markdown("### ?? Churn Rate by Country")
     geo_churn = df_filtered.groupby('Geography')['Exited'].agg(['sum', 'count']).reset_index()
     geo_churn.columns = ['Geography', 'Churned', 'Total']
     geo_churn['Rate'] = (geo_churn['Churned'] / geo_churn['Total']) * 100
@@ -253,7 +253,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.markdown("### 👥 Churn Rate by Age Group")
+    st.markdown("### ?? Churn Rate by Age Group")
     age_churn = df_filtered.groupby('Age_Group', observed=True)['Exited'].mean() * 100
     age_df = pd.DataFrame({'Age_Group': age_churn.index, 'Churn_Rate': age_churn.values})
     
@@ -270,7 +270,7 @@ with col2:
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("### 💰 Churn by Balance Segment")
+    st.markdown("### ?? Churn by Balance Segment")
     bal_churn = df_filtered.groupby('Balance_Segment', observed=True)['Exited'].mean() * 100
     bal_df = pd.DataFrame({'Segment': bal_churn.index, 'Churn_Rate': bal_churn.values})
     
@@ -281,7 +281,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.markdown("### 📈 Churn by Credit Score")
+    st.markdown("### ?? Churn by Credit Score")
     credit_churn = df_filtered.groupby('Credit_Score_Band', observed=True)['Exited'].mean() * 100
     credit_df = pd.DataFrame({'Score_Band': credit_churn.index, 'Churn_Rate': credit_churn.values})
     
@@ -297,7 +297,7 @@ with col2:
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("### ⏰ Churn by Tenure")
+    st.markdown("### ? Churn by Tenure")
     tenure_churn = df_filtered.groupby('Tenure_Group', observed=True)['Exited'].mean() * 100
     tenure_df = pd.DataFrame({'Tenure': tenure_churn.index, 'Churn_Rate': tenure_churn.values})
     
@@ -311,7 +311,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.markdown("### 📦 Churn by Number of Products")
+    st.markdown("### ?? Churn by Number of Products")
     product_churn = df_filtered.groupby('NumOfProducts')['Exited'].mean() * 100
     product_df = pd.DataFrame({'Products': product_churn.index, 'Churn_Rate': product_churn.values})
     
@@ -326,7 +326,7 @@ with col2:
 
 # High-Value Analysis
 st.markdown("---")
-st.markdown("## 💎 High-Value Customer Analysis")
+st.markdown("## ?? High-Value Customer Analysis")
 
 high_balance_threshold = df_filtered['Balance'].quantile(0.8)
 high_value = df_filtered[df_filtered['Balance'] >= high_balance_threshold]
@@ -355,7 +355,7 @@ with col2:
 with col3:
     st.markdown(f"""
     <div class="metric-card">
-        <h3>€{high_value['Balance'].sum():,.0f}</h3>
+        <h3>�{high_value['Balance'].sum():,.0f}</h3>
         <p>Balance at Risk</p>
         <small>Total HV balance</small>
     </div>
@@ -365,7 +365,7 @@ with col4:
     hv_churned_balance = high_value[high_value['Exited']==1]['Balance'].mean() if len(high_value[high_value['Exited']==1]) > 0 else 0
     st.markdown(f"""
     <div class="metric-card">
-        <h3>€{hv_churned_balance:,.0f}</h3>
+        <h3>�{hv_churned_balance:,.0f}</h3>
         <p>Avg Lost per HV</p>
         <small>Per churned customer</small>
     </div>
@@ -373,12 +373,12 @@ with col4:
 
 # Gender and Heatmap
 st.markdown("---")
-st.markdown("## 👫 Advanced Analytics")
+st.markdown("## ?? Advanced Analytics")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("### 👥 Churn Rate by Gender")
+    st.markdown("### ?? Churn Rate by Gender")
     gender_churn = df_filtered.groupby('Gender')['Exited'].mean() * 100
     gender_df = pd.DataFrame({'Gender': gender_churn.index, 'Churn_Rate': gender_churn.values})
     
@@ -393,7 +393,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.markdown("### 🔥 Churn Heatmap: Geography × Age")
+    st.markdown("### ?? Churn Heatmap: Geography � Age")
     heatmap_data = df_filtered.groupby(['Geography', 'Age_Group'], observed=True)['Exited'].mean().unstack() * 100
     fig = px.imshow(heatmap_data, text_auto='.1f', aspect="auto", 
                     color_continuous_scale='Blues',
@@ -403,7 +403,7 @@ with col2:
 
 # Interactive Risk Explorer
 st.markdown("---")
-st.markdown("## 🎯 Customer Risk Explorer")
+st.markdown("## ?? Customer Risk Explorer")
 
 sample_size = min(1000, len(df_filtered))
 risk_sample = df_filtered.sample(sample_size)
@@ -413,21 +413,21 @@ fig = px.scatter(risk_sample, x='Age', y='CreditScore', size='Balance', color='R
                  hover_data=['Geography', 'Gender', 'NumOfProducts', 'IsActiveMember', 'Balance'],
                  color_discrete_map={'Low Risk': '#4a9e8f', 'High Risk': '#5a8ab5'},
                  title="<b>Customer Risk Explorer - Hover for details</b>",
-                 labels={'CreditScore': 'Credit Score', 'Age': 'Age', 'Balance': 'Balance (€)'})
+                 labels={'CreditScore': 'Credit Score', 'Age': 'Age', 'Balance': 'Balance (�)'})
 fig.update_layout(height=500, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font_color='#c0c8d8',
                   xaxis=dict(gridcolor='#2a3042'), yaxis=dict(gridcolor='#2a3042'))
 st.plotly_chart(fig, use_container_width=True)
 
 # Insights Section
 st.markdown("---")
-st.markdown("## 📌 Strategic Insights & Recommendations")
+st.markdown("## ?? Strategic Insights & Recommendations")
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.markdown(f"""
     <div class="insight-box">
-        <h3>📊 Key Findings</h3>
+        <h3>?? Key Findings</h3>
         <ul>
             <li><b>Germany</b> has <b style="color: #8ab5d8;">{germany_rate:.1f}% churn</b> - Highest among regions</li>
             <li><b>Age 46-60</b> shows <b style="color: #8ab5d8;">{age_churn['46-60']:.1f}% churn</b> - Critical segment</li>
@@ -440,7 +440,7 @@ with col1:
 with col2:
     st.markdown("""
     <div class="recommendation-box">
-        <h3>💡 Recommendations</h3>
+        <h3>?? Recommendations</h3>
         <ol>
             <li>Launch retention campaigns in Germany</li>
             <li>Engage inactive members with personalized offers</li>
@@ -455,7 +455,7 @@ with col2:
 st.markdown("---")
 st.markdown("""
 <div class="footer">
-    <p>🏦 <b>Customer Segmentation & Churn Pattern Analytics</b> | Unified Mentor | European Central Bank</p>
+    <p>?? <b>Customer Segmentation & Churn Pattern Analytics</b> | Unified Mentor | European Central Bank</p>
     <p style="font-size: 12px; margin-top: 8px;">Premium Dark Mode Dashboard | Professional Banking Analytics</p>
 </div>
 """, unsafe_allow_html=True)
